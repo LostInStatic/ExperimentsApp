@@ -11,11 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AddProductToTrial {
+public class AddProductToTrialDto {
     private Long id;
     private String name;
     private Rooms rooms;
-
-    private List<Trial> list;
     private Long trialId;
 }

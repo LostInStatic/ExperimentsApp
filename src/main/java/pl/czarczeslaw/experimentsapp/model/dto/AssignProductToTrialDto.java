@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AssignProductToTrial {
+public class AssignProductToTrialDto {
    private Long productId;
    private Long trialId;
 }
