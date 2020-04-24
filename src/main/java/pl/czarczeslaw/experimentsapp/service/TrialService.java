@@ -29,12 +29,12 @@ public class TrialService {
         return trialReposiotory.findAll();
     }
 
-    public Trial getById(Long studentId) {
-        Optional<Trial> studentOptional = trialReposiotory.findById(studentId);
+    public Trial getById(Long trailId) {
+        Optional<Trial> studentOptional = trialReposiotory.findById(trailId);
         if (studentOptional.isPresent()) {
             return studentOptional.get();
         }
-        throw new EntityNotFoundException("student, id:" + studentId);
+        throw new EntityNotFoundException("student, id:" + trailId);
     }
 
     public Long save(CreateTrialDto dto) {

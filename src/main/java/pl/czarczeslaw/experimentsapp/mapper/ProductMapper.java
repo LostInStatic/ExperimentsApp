@@ -11,5 +11,5 @@ import java.util.List;
 public interface ProductMapper {
     Product createProductFromDto(CreateProductDto dto);
 
-    List<Product> AddProductsToTrial(AddProductToTrialDto dto);
+    Product AddProductsToTrial(AddProductToTrialDto dto);
 }
