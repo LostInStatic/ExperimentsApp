@@ -1,27 +1,21 @@
-package pl.czarczeslaw.experimentsapp.model;
+package pl.czarczeslaw.experimentsapp.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.czarczeslaw.experimentsapp.model.Rooms;
+import pl.czarczeslaw.experimentsapp.model.Trial;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AddProductToTrial {
     private Long id;
     private String name;
-
-    @Enumerated(EnumType.STRING)
     private Rooms rooms;
 
-    @ManyToMany(mappedBy = "product")
     private List<Trial> list;
-
-
+    private Long trialId;
 }
