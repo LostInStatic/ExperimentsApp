@@ -1,8 +1,6 @@
 package pl.czarczeslaw.experimentsapp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,8 +18,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Rooms rooms;
 
-    @ManyToMany(mappedBy = "product")
-    private List<Trial> list;
+    @OneToMany(mappedBy = "product")
+    private List<ProductTrial> list;
 
 
 }

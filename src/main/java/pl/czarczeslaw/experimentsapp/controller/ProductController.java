@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.czarczeslaw.experimentsapp.model.Product;
-import pl.czarczeslaw.experimentsapp.model.Trial;
+import pl.czarczeslaw.experimentsapp.model.dto.AddProductToTrailDto;
 import pl.czarczeslaw.experimentsapp.model.dto.CreateProductDto;
-import pl.czarczeslaw.experimentsapp.model.dto.CreateTrialDto;
 import pl.czarczeslaw.experimentsapp.model.dto.UpdateProductDto;
 import pl.czarczeslaw.experimentsapp.service.ProductService;
+import pl.czarczeslaw.experimentsapp.service.TrialService;
 
 import java.util.List;
 
@@ -16,10 +16,12 @@ import java.util.List;
 @RequestMapping(path = "/product")
 public class ProductController {
     private final ProductService productService;
+    private final TrialService trialService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, TrialService trialService) {
         this.productService = productService;
+        this.trialService = trialService;
     }
 
     @GetMapping("/get")
@@ -48,5 +50,11 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteProduct(@PathVariable("id") Long id) {
         productService.delete(id);
+    }
+
+    @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createProduct(@RequestBody AddProductToTrailDto dto) {
+        trialService.addProductToTrail(dto);
     }
 }

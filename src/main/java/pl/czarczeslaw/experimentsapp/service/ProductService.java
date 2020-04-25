@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.czarczeslaw.experimentsapp.mapper.ProductMapper;
 import pl.czarczeslaw.experimentsapp.model.Product;
-import pl.czarczeslaw.experimentsapp.model.Trial;
 import pl.czarczeslaw.experimentsapp.model.dto.CreateProductDto;
-import pl.czarczeslaw.experimentsapp.model.dto.CreateTrialDto;
 import pl.czarczeslaw.experimentsapp.model.dto.UpdateProductDto;
-import pl.czarczeslaw.experimentsapp.model.dto.UpdateTrialDto;
 import pl.czarczeslaw.experimentsapp.repository.ProductRepository;
 
 import javax.persistence.EntityNotFoundException;

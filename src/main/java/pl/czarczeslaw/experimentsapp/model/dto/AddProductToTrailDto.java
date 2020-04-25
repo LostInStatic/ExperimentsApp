@@ -6,14 +6,12 @@ import lombok.NoArgsConstructor;
 import pl.czarczeslaw.experimentsapp.model.Rooms;
 import pl.czarczeslaw.experimentsapp.model.Trial;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AddProductToTrialDto {
-    private Long id;
+public class AddProductToTrailDto {
+    private Long productId;
     private String name;
     private Rooms rooms;
-    private Long trialId;
+    private Long trailId;
 }

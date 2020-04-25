@@ -1,9 +1,7 @@
 package pl.czarczeslaw.experimentsapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -22,8 +20,8 @@ public class Trial {
     private String name;
     private String description;
 
-    @ManyToMany
-    private Set<Product> product;
+    @OneToMany(mappedBy = "trail")
+    private List<ProductTrial> list;
 
     @ManyToOne
     private TrialType type;
