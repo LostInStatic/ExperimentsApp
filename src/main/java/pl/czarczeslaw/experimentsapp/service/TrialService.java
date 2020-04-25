@@ -42,7 +42,7 @@ public class TrialService {
         return trialReposiotory.save(trial).getId();
     }
 
-    public void update(UpdateTrialDto dto) {
+    public Trial update(UpdateTrialDto dto) {
         Optional<Trial> optional = trialReposiotory.findById(dto.getTrialId());
         if (optional.isPresent()) {
             Trial trial = optional.get();
@@ -57,11 +57,12 @@ public class TrialService {
                 trial.setType(dto.getType());
             }
 
-            trialReposiotory.save(trial);
+            return trialReposiotory.save(trial);
         } else {
             throw new EntityNotFoundException("trial, id:" + dto.getTrialId());
         }
     }
+
     public void delete(Long id) {
         if (trialReposiotory.existsById(id)) {
             trialReposiotory.deleteById(id);
