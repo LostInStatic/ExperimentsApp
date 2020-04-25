@@ -43,7 +43,7 @@ public class ProductService {
         return productRepository.save(product).getId();
     }
 
-    public void update(UpdateProductDto dto) {
+    public Product update(UpdateProductDto dto) {
         Optional<Product> optional = productRepository.findById(dto.getProductId());
         if (optional.isPresent()) {
             Product product = optional.get();
@@ -54,7 +54,7 @@ public class ProductService {
             if (dto.getRooms() != null) {
                 product.setRooms(dto.getRooms());
             }
-            productRepository.save(product);
+            return productRepository.save(product);
         } else {
             throw new EntityNotFoundException("trial, id:" + dto.getProductId());
         }
@@ -63,8 +63,8 @@ public class ProductService {
     public void delete(Long id) {
         if (productRepository.existsById(id)) {
             productRepository.deleteById(id);
-            return;
+        } else {
+            throw new EntityNotFoundException("trial, id:" + id);
         }
-        throw new EntityNotFoundException("trial, id:" + id);
     }
 }
