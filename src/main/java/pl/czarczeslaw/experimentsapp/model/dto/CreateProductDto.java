@@ -6,8 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.czarczeslaw.experimentsapp.model.Rooms;
 
+<<<<<<< HEAD
 import javax.validation.constraints.NotNull;
 
+=======
+>>>>>>> master
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
