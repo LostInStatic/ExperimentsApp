@@ -11,16 +11,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 public class ProductTrial {
-    @EmbeddedId
-    ProductTrialKey id;
+    @Id
+    Long id;
 
     @ManyToOne
-    @MapsId("trailId")
-    Trial trail;
+    @JoinColumn(name = "trail_id")
+    Trial trailId;
 
     @ManyToOne
-    @MapsId("productId")
-    Product product;
+    @JoinColumn(name = "product_id")
+    Product productId;
 
     public ProductTrial(Trial trial, Product product) {
     }

@@ -8,7 +8,9 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -26,8 +28,15 @@ public class Trial {
     @NotEmpty(message = "Please provide description of trial")
     private String description;
 
-    @OneToMany(mappedBy = "trail")
-    private List<ProductTrial> list;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "trial_product",
+            joinColumns = {
+                    @JoinColumn(name = "trial_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "product_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private Set<Product> product = new HashSet<>();
 
     @ManyToOne
     private TrialType type;

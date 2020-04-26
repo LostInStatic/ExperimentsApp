@@ -9,7 +9,7 @@ import pl.czarczeslaw.experimentsapp.model.Trial;
 import pl.czarczeslaw.experimentsapp.model.dto.AddProductToTrailDto;
 
 
-@Mapper(componentModel = "spring", imports = {Trial.class, Product.class, ProductTrial.class})
+@Mapper(componentModel = "spring")
         public interface ProductTrailMapper{
 //        @Mappings(value = {
 //                @Mapping(source = "productId", target = "product"),

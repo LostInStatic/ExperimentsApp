@@ -4,7 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -21,8 +23,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Rooms rooms;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductTrial> list;
+    @ManyToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private Set<Trial> trial = new HashSet<>();
 
 
 }

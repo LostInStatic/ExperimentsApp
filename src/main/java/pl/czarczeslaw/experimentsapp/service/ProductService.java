@@ -1,7 +1,10 @@
 package pl.czarczeslaw.experimentsapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pl.czarczeslaw.experimentsapp.mapper.ProductMapper;
 import pl.czarczeslaw.experimentsapp.model.Product;
 import pl.czarczeslaw.experimentsapp.model.dto.CreateProductDto;
