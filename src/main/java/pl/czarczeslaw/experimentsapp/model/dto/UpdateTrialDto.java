@@ -1,24 +1,23 @@
 package pl.czarczeslaw.experimentsapp.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import pl.czarczeslaw.experimentsapp.model.TrialType;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class UpdateTrialDto {
+    @NotNull(message = "Provide correct trail id")
+    @Min(1)
     private Long TrialId;
-    private String name;
-    private String description;
-    private TrialType type;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm")
-    @CreatedDate
-    private LocalDateTime whenCreated;
+    @NotNull(message = "Provide correct trial name")
+    private String name;
+
+    @NotNull(message = "Provide correct trial description")
+    private String description;
 }

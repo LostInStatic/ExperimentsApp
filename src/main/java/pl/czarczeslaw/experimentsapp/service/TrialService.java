@@ -66,9 +66,6 @@ public class TrialService {
             if (dto.getDescription() != null) {
                 trial.setDescription(dto.getDescription());
             }
-            if (dto.getType() != null) {
-                trial.setType(dto.getType());
-            }
 
             return trialReposiotory.save(trial);
         } else {
