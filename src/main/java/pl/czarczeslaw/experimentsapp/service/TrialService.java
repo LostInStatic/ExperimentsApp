@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.czarczeslaw.experimentsapp.mapper.ProductMapper;
-import pl.czarczeslaw.experimentsapp.mapper.ProductTrailMapper;
 import pl.czarczeslaw.experimentsapp.mapper.TrialMapper;
 import pl.czarczeslaw.experimentsapp.model.Product;
 import pl.czarczeslaw.experimentsapp.model.ProductTrial;

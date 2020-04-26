@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.czarczeslaw.experimentsapp.model.Rooms;
-import pl.czarczeslaw.experimentsapp.model.Trial;
 
 @AllArgsConstructor
 @NoArgsConstructor

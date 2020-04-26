@@ -5,9 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.czarczeslaw.experimentsapp.model.Rooms;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
