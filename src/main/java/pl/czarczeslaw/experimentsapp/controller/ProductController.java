@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.czarczeslaw.experimentsapp.model.Product;
-import pl.czarczeslaw.experimentsapp.model.dto.AddProductToTrailDto;
 import pl.czarczeslaw.experimentsapp.model.dto.CreateProductDto;
 import pl.czarczeslaw.experimentsapp.model.dto.UpdateProductDto;
 import pl.czarczeslaw.experimentsapp.service.ProductService;
@@ -54,11 +53,5 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteProduct(@PathVariable("id")@Min(1) Long id) {
         productService.delete(id);
-    }
-
-    @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createProduct(@Valid @RequestBody AddProductToTrailDto dto) {
-        trialService.addProductToTrail(dto);
     }
 }

@@ -1,23 +1,22 @@
 package pl.czarczeslaw.experimentsapp.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Trial {
+@Table(name = "trial")
+public class Trial implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,24 +25,25 @@ public class Trial {
     private String name;
 
     @NotEmpty(message = "Please provide description of trial")
+    @Column(length = 1020)
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(name = "trial_product",
-            joinColumns = {
-                    @JoinColumn(name = "trial_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "product_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)})
-    private Set<Product> product = new HashSet<>();
+            joinColumns = {@JoinColumn(name = "trial_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    private List<Product> product = new ArrayList<>();
 
     @ManyToOne
     private TrialType type;
 
     @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm")
-    @CreatedDate
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
     @CreationTimestamp
     private LocalDateTime whenCreated;
 }

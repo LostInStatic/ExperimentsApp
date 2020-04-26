@@ -5,16 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.czarczeslaw.experimentsapp.mapper.ProductMapper;
-import pl.czarczeslaw.experimentsapp.mapper.ProductTrailMapper;
 import pl.czarczeslaw.experimentsapp.mapper.TrialMapper;
-import pl.czarczeslaw.experimentsapp.model.Product;
-import pl.czarczeslaw.experimentsapp.model.ProductTrial;
 import pl.czarczeslaw.experimentsapp.model.Trial;
-import pl.czarczeslaw.experimentsapp.model.dto.AddProductToTrailDto;
 import pl.czarczeslaw.experimentsapp.model.dto.CreateTrialDto;
 import pl.czarczeslaw.experimentsapp.model.dto.UpdateTrialDto;
 import pl.czarczeslaw.experimentsapp.repository.ProductRepository;
-import pl.czarczeslaw.experimentsapp.repository.ProductTrialRepository;
 import pl.czarczeslaw.experimentsapp.repository.TrialReposiotory;
 
 import javax.persistence.EntityNotFoundException;
@@ -27,15 +22,13 @@ public class TrialService {
     private final TrialMapper trialMapper;
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
-    private final ProductTrialRepository productTrialRepository;
 
     @Autowired
-    public TrialService(TrialReposiotory trialReposiotory, TrialMapper trialMapper, ProductMapper productMapper, ProductRepository productRepository, ProductTrialRepository productTrialRepository) {
+    public TrialService(TrialReposiotory trialReposiotory, TrialMapper trialMapper, ProductMapper productMapper, ProductRepository productRepository) {
         this.trialReposiotory = trialReposiotory;
         this.trialMapper = trialMapper;
         this.productMapper = productMapper;
         this.productRepository = productRepository;
-        this.productTrialRepository = productTrialRepository;
     }
 
     public List<Trial> getAll() {
@@ -47,7 +40,7 @@ public class TrialService {
         if (studentOptional.isPresent()) {
             return studentOptional.get();
         }
-        throw new EntityNotFoundException("student, id:" + trailId);
+        throw new EntityNotFoundException("trial, id:" + trailId);
     }
 
     public Long save(CreateTrialDto dto) {
@@ -83,18 +76,5 @@ public class TrialService {
 
     public Page<Trial> getPage(PageRequest of) {
         return trialReposiotory.findAll(of);
-    }
-
-
-    public void addProductToTrail(AddProductToTrailDto dto) {
-        Optional<Trial> optional = trialReposiotory.findById(dto.getTrailId());
-        if (optional.isPresent()) {
-            Product product = productMapper.AddProductsToTrial(dto);
-            ProductTrial productTrial = new ProductTrial(optional.get(), product);
-            productRepository.save(product);
-            productTrialRepository.save(productTrial);
-        } else {
-            throw new EntityNotFoundException("shit happen" + dto.getProductId());
-        }
     }
 }

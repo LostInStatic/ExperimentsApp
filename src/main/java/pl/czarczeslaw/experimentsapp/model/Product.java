@@ -1,18 +1,20 @@
 package pl.czarczeslaw.experimentsapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.HashSet;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Product {
+@Table(name = "product")
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,8 +25,12 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Rooms rooms;
 
-    @ManyToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Trial> trial = new HashSet<>();
-
-
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "product")
+    private List<Trial> trial = new ArrayList<>();
 }

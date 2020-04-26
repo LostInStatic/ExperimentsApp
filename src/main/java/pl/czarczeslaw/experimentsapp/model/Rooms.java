@@ -1,5 +1,10 @@
 package pl.czarczeslaw.experimentsapp.model;
 
 public enum Rooms {
-    KITCHEN, BATHROOM, OFFICE
+    KITCHEN("Kuchnia"),
+    BATHROOM("Łazienka"),
+    OFFICE("Biuro");
+
+    Rooms(String biuro) {
+    }
 }
