@@ -11,6 +11,7 @@ import pl.czarczeslaw.experimentsapp.model.dto.UpdateTrialDto;
 import pl.czarczeslaw.experimentsapp.service.TrialService;
 
 import javax.validation.constraints.Min;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -47,7 +48,7 @@ public class TrialController {
 
     @PostMapping("/create/image/{id}")
     public void addImage(@RequestParam("image") MultipartFile image,
-                         @PathVariable("id") Long id) {
+                         @PathVariable("id") Long id) throws IOException {
         trialService.savePhotoFor(id, image);
     }
 
