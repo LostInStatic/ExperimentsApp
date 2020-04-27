@@ -1,34 +1,42 @@
 package pl.czarczeslaw.experimentsapp.service;
 
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import pl.czarczeslaw.experimentsapp.mapper.ProductMapper;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import pl.czarczeslaw.experimentsapp.mapper.ImageMapper;
 import pl.czarczeslaw.experimentsapp.mapper.TrialMapper;
 import pl.czarczeslaw.experimentsapp.model.Trial;
+import pl.czarczeslaw.experimentsapp.model.TrialPhoto;
+import pl.czarczeslaw.experimentsapp.model.dto.AddNewImageDto;
 import pl.czarczeslaw.experimentsapp.model.dto.CreateTrialDto;
 import pl.czarczeslaw.experimentsapp.model.dto.UpdateTrialDto;
-import pl.czarczeslaw.experimentsapp.repository.ProductRepository;
+import pl.czarczeslaw.experimentsapp.repository.TrialPhotoRepository;
 import pl.czarczeslaw.experimentsapp.repository.TrialReposiotory;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class TrialService {
     private final TrialReposiotory trialReposiotory;
     private final TrialMapper trialMapper;
-    private final ProductMapper productMapper;
-    private final ProductRepository productRepository;
+    private final TrialPhotoRepository trialPhotoRepository;
+    private final ImageMapper imageMapper;
 
     @Autowired
-    public TrialService(TrialReposiotory trialReposiotory, TrialMapper trialMapper, ProductMapper productMapper, ProductRepository productRepository) {
+    public TrialService(TrialReposiotory trialReposiotory, TrialMapper trialMapper, TrialPhotoRepository trialPhotoRepository, ImageMapper imageMapper) {
         this.trialReposiotory = trialReposiotory;
         this.trialMapper = trialMapper;
-        this.productMapper = productMapper;
-        this.productRepository = productRepository;
+        this.trialPhotoRepository = trialPhotoRepository;
+        this.imageMapper = imageMapper;
     }
 
     public List<Trial> getAll() {
@@ -74,7 +82,42 @@ public class TrialService {
         throw new EntityNotFoundException("trial, id:" + id);
     }
 
-    public Page<Trial> getPage(PageRequest of) {
-        return trialReposiotory.findAll(of);
+    public void savePhotoFor(Long trialId, MultipartFile image) throws IOException {
+        Optional<Trial> optional = trialReposiotory.findById(trialId);
+        if (optional.isPresent() && !image.isEmpty()) {
+            Trial trial = optional.get();
+            TrialPhoto trialPhoto = imageMapper.mapImageFromDto(new AddNewImageDto(null, image.getOriginalFilename(), image.getBytes()));
+            trialPhotoRepository.save(trialPhoto);
+
+            trial.setPhoto(trialPhoto);
+            trialReposiotory.save(trial);
+        } else if (optional.isEmpty()) {
+            throw new EntityNotFoundException("Not found:" + trialId);
+        } else {
+            throw new IOException("no image");
+        }
+    }
+
+    public byte[] getImageById(Long id) {
+        Optional<TrialPhoto> optional = trialPhotoRepository.findById(id);
+        if (optional.isPresent()) {
+            return optional.get().getFoto();
+        } else {
+            throw new EntityNotFoundException("not found photo with id:" + id);
+        }
+    }
+
+    public JSONObject getDescById(Long id) {
+        Optional<Trial> optional = trialReposiotory.findById(id);
+        if (optional.isPresent()) {
+            JSONObject object = new JSONObject();
+            Map<String, String> map = new HashMap<>();
+            map.put("id", String.valueOf(optional.get().getId()));
+            map.put("description", optional.get().getDescription());
+            object.putAll(map);
+            return object;
+        } else {
+            throw new EntityNotFoundException("nope");
+        }
     }
 }

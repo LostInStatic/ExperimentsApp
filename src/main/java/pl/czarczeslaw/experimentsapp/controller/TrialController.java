@@ -1,17 +1,18 @@
 package pl.czarczeslaw.experimentsapp.controller;
 
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.czarczeslaw.experimentsapp.model.Trial;
 import pl.czarczeslaw.experimentsapp.model.dto.CreateTrialDto;
 import pl.czarczeslaw.experimentsapp.model.dto.UpdateTrialDto;
 import pl.czarczeslaw.experimentsapp.service.TrialService;
 
 import javax.validation.constraints.Min;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,16 +36,26 @@ public class TrialController {
         return trialService.getById(id);
     }
 
-    @GetMapping("/get/page/{no}&{size}")
-    public Page<Trial> getPage(@PathVariable("no") @Min(1) int no,
-                               @PathVariable("size") @Min(1) int size) {
-        return trialService.getPage(PageRequest.of(no, size));
+    @GetMapping("/get/descr/{id}")
+    public JSONObject getDescriptionById(@PathVariable("id") @Min(1) Long id) {
+        return trialService.getDescById(id);
+    }
+
+    @GetMapping("/get/image/{id}")
+    public byte[] getImageById(@PathVariable("id") @Min(1) Long id) {
+        return trialService.getImageById(id);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createTrial(@RequestBody CreateTrialDto dto) {
         trialService.save(dto);
+    }
+
+    @PostMapping("/create/image/{id}")
+    public void addImage(@RequestParam("image") MultipartFile image,
+                         @PathVariable("id") Long id) throws IOException {
+        trialService.savePhotoFor(id, image);
     }
 
     @PutMapping("/update")
