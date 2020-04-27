@@ -28,6 +28,7 @@ public class DataInit {
             Product paper = productMapper.createProductFromDto(new CreateProductDto(4L, "paper", Rooms.OFFICE));
             Product water = productMapper.createProductFromDto(new CreateProductDto(5L, "water", Rooms.BATHROOM));
             productRepository.saveAll(Arrays.asList(balloon, petBottle, scissors, paper, water));
+
             Trial trial1 = trialMapper.createTrialFromDto(new CreateTrialDto(1L, "Megafon",
                     "Zwiń kartkę w „lejek”. Wielkość powstałego otworu nie jest szczególnie istotna – najważniejsze, aby można było w miarę wygodnie przystawić do niego usta\n" +
                             "Przystaw usta do mniejszego otworu, który powstał przy zrobieniu „lejka”\n" +
@@ -68,11 +69,11 @@ public class DataInit {
 
             List<Product> list2 = trial2.getProduct();
             list2.addAll(Arrays.asList(petBottle, paper, scissors));
-            trial1.setProduct(list2);
+            trial2.setProduct(list2);
 
             List<Product> list3 = trial3.getProduct();
             list3.addAll(Arrays.asList(petBottle, scissors, water));
-            trial1.setProduct(list3);
+            trial3.setProduct(list3);
 
             List<Product> list4 = trial4.getProduct();
             list4.addAll(Arrays.asList(paper, petBottle, scissors));
@@ -80,7 +81,7 @@ public class DataInit {
 
             List<Product> list5 = trial5.getProduct();
             list5.addAll(Arrays.asList(petBottle, petBottle, petBottle, petBottle, water));
-            trial1.setProduct(list5);
+            trial5.setProduct(list5);
 
             trialReposiotory.saveAll(Arrays.asList(trial1, trial2, trial3, trial4, trial5));
         };

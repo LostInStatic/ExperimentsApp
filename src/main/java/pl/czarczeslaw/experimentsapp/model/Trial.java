@@ -3,6 +3,7 @@ package pl.czarczeslaw.experimentsapp.model;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -25,7 +26,7 @@ public class Trial implements Serializable {
     private String name;
 
     @NotEmpty(message = "Please provide description of trial")
-    @Column(length = 1020)
+    @Column(length = 2000)
     private String description;
 
     @JsonManagedReference
@@ -38,6 +39,10 @@ public class Trial implements Serializable {
             joinColumns = {@JoinColumn(name = "trial_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")})
     private List<Product> product = new ArrayList<>();
+
+    @OneToOne
+    @Nullable
+    private TrialPhoto photo;
 
     @ManyToOne
     private TrialType type;
