@@ -1,4 +1,4 @@
-CREATE TABLE product (
+CREATE TABLE IF NOT EXISTS product (
     id int NOT NULL AUTO_INCREMENT,
     name varchar(24),
     rooms varchar(24),
@@ -12,7 +12,7 @@ INSERT INTO product (name, rooms) VALUES
 ('Papier', 'KITCHEN'),
 ('Woda', 'KITCHEN');
 
-CREATE TABLE trial (
+CREATE TABLE IF NOT EXISTS trial (
     id int NOT NULL AUTO_INCREMENT,
     name varchar(50),
     description varchar(3000),
@@ -736,7 +736,7 @@ Gdy naciskamy na butelkę powietrze w środku próbuje wydostać się na zewnąt
   ')
   ;
 
-CREATE TABLE trial_product (
+CREATE TABLE IF NOT EXISTS trial_product (
     trial_id int,
     product_id int,
   FOREIGN KEY (trial_id) REFERENCES trial(id),
