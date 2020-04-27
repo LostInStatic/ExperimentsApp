@@ -736,7 +736,7 @@ Gdy naciskamy na butelkę powietrze w środku próbuje wydostać się na zewnąt
   ')
   ;
 
-CREATE TABLE IF NOT EXISTS trial_product (
+CREATE TABLE trial_product (
     trial_id int,
     product_id int,
   FOREIGN KEY (trial_id) REFERENCES trial(id),

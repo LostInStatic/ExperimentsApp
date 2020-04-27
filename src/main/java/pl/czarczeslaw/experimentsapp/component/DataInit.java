@@ -30,16 +30,16 @@ public class DataInit {
         this.userRoleRepository = userRoleRepository;
     }
 
-    @Bean
-    public CommandLineRunner onApplicationEvent(ProductRepository productRepository, TrialReposiotory trialReposiotory, ProductMapper productMapper, TrialMapper trialMapper) {
-        return args -> {
-            addDefaultRole("USER");
-            addDefaultRole("ADMIN");
-
-            addDefaultUser("admin", "admin", "ADMIN", "USER");
-            addDefaultUser("user", "user", "USER");
-        };
-    }
+//    @Bean
+//    public CommandLineRunner onApplicationEvent(ProductRepository productRepository, TrialReposiotory trialReposiotory, ProductMapper productMapper, TrialMapper trialMapper) {
+//        return args -> {
+//            addDefaultRole("USER");
+//            addDefaultRole("ADMIN");
+//
+//            addDefaultUser("admin", "admin", "ADMIN", "USER");
+//            addDefaultUser("user", "user", "USER");
+//        };
+//    }
 
     private void addDefaultUser(String username, String password, String... roles) {
         if (!userRepository.existsByUsername(username)) {

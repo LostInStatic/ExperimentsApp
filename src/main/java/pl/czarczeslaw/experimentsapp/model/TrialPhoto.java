@@ -16,7 +16,7 @@ public class TrialPhoto {
     private Long id;
 
     @Lob
-    @Column(columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] foto;
     private String name;
 }
