@@ -1,7 +1,10 @@
 package pl.czarczeslaw.experimentsapp.service;
 
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import pl.czarczeslaw.experimentsapp.mapper.ImageMapper;
 import pl.czarczeslaw.experimentsapp.mapper.TrialMapper;
@@ -12,10 +15,13 @@ import pl.czarczeslaw.experimentsapp.model.dto.CreateTrialDto;
 import pl.czarczeslaw.experimentsapp.model.dto.UpdateTrialDto;
 import pl.czarczeslaw.experimentsapp.repository.TrialPhotoRepository;
 import pl.czarczeslaw.experimentsapp.repository.TrialReposiotory;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -98,6 +104,20 @@ public class TrialService {
             return optional.get().getFoto();
         } else {
             throw new EntityNotFoundException("not found photo with id:" + id);
+        }
+    }
+
+    public JSONObject getDescById(Long id) {
+        Optional<Trial> optional = trialReposiotory.findById(id);
+        if (optional.isPresent()) {
+            JSONObject object = new JSONObject();
+            Map<String, String> map = new HashMap<>();
+            map.put("id", String.valueOf(optional.get().getId()));
+            map.put("description", optional.get().getDescription());
+            object.putAll(map);
+            return object;
+        } else {
+            throw new EntityNotFoundException("nope");
         }
     }
 }

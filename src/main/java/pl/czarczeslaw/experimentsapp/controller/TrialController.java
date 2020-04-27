@@ -1,5 +1,6 @@
 package pl.czarczeslaw.experimentsapp.controller;
 
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -33,6 +34,11 @@ public class TrialController {
     @GetMapping("/get/{id}")
     public Trial getById(@PathVariable("id") @Min(1) Long id) {
         return trialService.getById(id);
+    }
+
+    @GetMapping("/get/descr/{id}")
+    public JSONObject getDescriptionById(@PathVariable("id") @Min(1) Long id) {
+        return trialService.getDescById(id);
     }
 
     @GetMapping("/get/image/{id}")
