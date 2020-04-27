@@ -5,11 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import pl.czarczeslaw.experimentsapp.model.Product;
 import pl.czarczeslaw.experimentsapp.model.TrialType;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,12 +16,11 @@ import java.util.Set;
 public class CreateTrialDto {
 
     private Long id;
-    private String name;
-    private String description;
-    private TrialType type;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm")
-    @CreatedDate
-    private LocalDateTime whenCreated;
+    @NotNull(message = "Provide correct trial name")
+    private String name;
+
+    @NotNull(message = "Provide correct trial description")
+    private String description;
 
 }
